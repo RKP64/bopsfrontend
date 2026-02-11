@@ -228,6 +228,7 @@ function ConversationalAgent() {
     };
 
     // Attach event listener to document for event delegation
+
     document.addEventListener('click', handlePdfReferenceClick);
 
     return () => {
@@ -1284,13 +1285,13 @@ function ConversationalAgent() {
                       alignItems: 'center',
                       justifyContent: 'center',
                       textAlign: 'center',
-                    }}>Compare latest financial data between Ather and Ola</button>
+                    }}>What are the peak congestion hours for Departure Entry at Terminal 1 versus Terminal 2</button>
                     <button className="predefined-question-btn" onClick={() => handleSubmit("Analyze latest financial data for Ather for FY2025")} style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       textAlign: 'center',
-                    }}>Analyze latest financial data for Ather</button>
+                    }}>Compare the ratio of Aerobridge vs. Bus boarding usage between Domestic and International operations at Terminal 2</button>
                   </div>
                 </div>
               ) : (
