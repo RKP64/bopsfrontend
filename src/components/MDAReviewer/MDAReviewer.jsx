@@ -180,18 +180,18 @@ function MDAReviewer() {
   //   "Broadcasting Market Analysis": ["Broadcasting Market Analysis"]
   // };
 
-  const analysisPromptsConfig = {
-    "EV Market Status": ["EV Market status"],
-    "EV Adoption Market impacts": ["EV adoption market impacts"],
-    "EV Market Competition": ["EV market competition"],
-    "EV Market Segment": ["EV market segment"],
-    "2G Phase Out": ["2G Phase Out"],
-    "5G Profitability Analysis": ["5G profitability analysis"],
-    "Jio Market Analysis": ["Jio market analysis"],
-    "Telecom Market Growth Analysis": ["Telecom Market Growth Analysis"],
-    "Broadcasting Market Health Analysis": ["Broadcasting Market Health Analysis"],
-    "Zee Strategy Analysis": ["Zee Strategy analysis"]
-  };
+const analysisPromptsConfig = {
+    "Daily Traffic Snapshot": ["Daily Traffic Snapshot"],
+    "Peak Congestion Analysis": ["Peak Congestion Analysis"],
+    "Security Lane Efficiency": ["Security Lane Efficiency"],
+    "Baggage Asset Utilization": ["Baggage Asset Utilization"],
+    "Boarding Operations Scan": ["Boarding Operations Scan"],
+    "Digital Adoption Trends": ["Digital Adoption Trends"],
+    "Customer Sentiment Pulse": ["Customer Sentiment Pulse"],
+    "Operational Headwinds": ["Operational Headwinds"],
+    "Terminal Performance Comparison": ["Terminal Performance Comparison"],
+    "Turnaround & Resource Planning": ["Turnaround & Resource Planning"]
+  }
 
 
   useEffect(() => {
