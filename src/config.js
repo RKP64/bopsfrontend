@@ -1,8 +1,8 @@
 // API Configuration
 export const API_CONFIG = {
   MARKETPLACE_URL: import.meta.env.VITE_MARKETPLACE_URL || "https://blraiport-dev.bialairport.com/",
-  BASE_URL: 'http://localhost:8021',
-  BASE_URL_2: 'http://localhost:8021',
+  BASE_URL: 'https://bopspilot-1.onrender.com',
+  BASE_URL_2: 'https://bopspilot-1.onrender.com',
   // BASE_URL: 'https://bial-genai-regulatory-mda-app-02-c8eag5fch2hkbfa2.southindia-01.azurewebsites.net/',
   // BASE_URL_2: 'https://bial-genai-regulatory-backend-01-bpdeeyd2h7hsc6bp.southindia-01.azurewebsites.net/',
 
