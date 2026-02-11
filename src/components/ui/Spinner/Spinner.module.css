@@ -1,0 +1,70 @@
+/* src/components/ui/Spinner/Spinner.module.css */
+
+.spinner {
+  display: inline-block;
+  border-width: 3px; /* Default border width */
+  border-style: solid;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite; /* Adjust speed as needed */
+}
+
+/* Animation for the spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Sizes --- */
+.small {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.medium {
+  width: 30px;
+  height: 30px;
+  border-width: 3px;
+}
+
+.large {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+/* --- Colors --- */
+
+.primary {
+  border-top-color: var(--color-primary-medium);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.white {
+  border-top-color: white;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+.dark {
+  border-top-color: var(--color-primary-dark);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+
+/* Visually hidden text for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

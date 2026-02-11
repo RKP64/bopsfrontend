@@ -1,0 +1,51 @@
+/* src/components/ui/Input/Input.module.css */
+
+.inputWrapper {
+  margin-bottom: 15px; /* Default spacing below each input */
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  font-size: 0.95rem;
+}
+
+.inputBase {
+  border: 1px solid var(--color-border-light);
+  padding: 12px 15px;
+  border-radius: var(--border-radius-small);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  width: 100%; /* Full width within its container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputBase::placeholder {
+  color: #a0a0a0;
+  opacity: 1; /* Firefox default is lower */
+}
+
+.inputBase:focus {
+  outline: none;
+  border-color: var(--color-primary-medium);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2); /* Light blue glow */
+}
+
+.inputBase:disabled {
+  background-color: var(--color-bg-light);
+  color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.textarea {
+  resize: vertical; /* Allow vertical resizing for textareas */
+  min-height: 80px; /* Minimum height for textarea */
+}
+
+/* Remove default margin for textarea if used in specific contexts */
+.textarea:not(:last-child) {
+  margin-bottom: 0;
+}

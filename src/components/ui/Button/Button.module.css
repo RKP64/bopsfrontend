@@ -1,0 +1,98 @@
+/* src/components/ui/Button/Button.module.css */
+
+.button {
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-family-primary);
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap; /* Prevent text wrapping */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--border-radius-small);
+  box-shadow: var(--shadow-light); /* Apply default shadow */
+  display: inline-flex; /* For better icon/text alignment */
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Sizes --- */
+.small {
+  padding: 8px 15px;
+  font-size: 0.85rem;
+}
+
+.medium {
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.large {
+  padding: 12px 25px;
+  font-size: 1.1rem;
+}
+
+/* --- Variants --- */
+
+/* Primary Button (Matching BIAL theme) */
+.primary {
+  background-color: var(--color-primary-medium);
+  color: white;
+}
+
+.primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Secondary Button (e.g., outlined or lighter background) */
+.secondary {
+  background-color: transparent;
+  color: var(--color-primary-medium);
+  border: 1px solid var(--color-primary-medium);
+  box-shadow: none;
+}
+
+.secondary:hover {
+  background-color: var(--color-primary-medium);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.secondary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Danger Button (for destructive actions) */
+.danger {
+  background-color: #e74c3c; /* Red */
+  color: white;
+}
+
+.danger:hover {
+  background-color: #c0392b; /* Darker red */
+  transform: translateY(-1px);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.danger:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Disabled State */
+.button:disabled {
+  background-color: var(--color-border-light); /* Lighter gray */
+  color: #a0a0a0; /* Gray text */
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.8;
+}

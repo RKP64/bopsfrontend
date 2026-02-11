@@ -1,0 +1,100 @@
+/* src/components/Sidebar/Sidebar.module.css */
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  padding: 24px 20px;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.sectionHeader {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Agents Section */
+.agentList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.agentItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.agentItem:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.agentItem.active {
+  background-color: #0d9488;
+  color: white;
+  font-weight: 600;
+}
+
+.agentIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+
+/* Bottom Icons */
+.bottomIcons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.bottomIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+}
+
+.bottomIcon:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
