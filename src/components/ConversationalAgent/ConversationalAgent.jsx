@@ -46,7 +46,7 @@ const MainContentHeader = ({ theme, setTheme }) => (
     alignItems: 'center',
     justifyContent: 'flex-end',
     padding: '0 1.5rem',
-    borderBottom: 1px solid var(--border-color),
+    borderBottom: `1px solid var(--border-color)`,
     backgroundColor: 'var(--background-secondary)',
     flexShrink: 0,
   }}>
@@ -60,7 +60,7 @@ const MainContentHeader = ({ theme, setTheme }) => (
         value={Object.keys(themes).find(key => themes[key].name === theme.name)}
         onChange={(e) => setTheme(themes[e.target.value])}
         style={{
-          padding: '0.5rem', borderRadius: '8px', border: 1px solid var(--border-color),
+          padding: '0.5rem', borderRadius: '8px', border: `1px solid var(--border-color)`,
           backgroundColor: 'var(--background-secondary)', color: 'var(--text-primary)',
           cursor: 'pointer', fontFamily: 'inherit'
         }}
@@ -119,12 +119,12 @@ function ConversationalAgent() {
             // Ensure URL has protocol for parsing
             const urlToParse = pdfUrl.startsWith('http://') || pdfUrl.startsWith('https://')
               ? pdfUrl
-              : https://${pdfUrl};
+              : `https://${pdfUrl}`;
             const urlObj = new URL(urlToParse);
             const blobParam = urlObj.searchParams.get('blob');
             if (blobParam) {
               // Reconstruct as /blob-proxy URL (ensure it starts with / and has correct format)
-              pdfUrl = /blob-proxy?blob=${blobParam};
+              pdfUrl = `/blob-proxy?blob=${blobParam}`;
               // Ensure URL format is correct: /blob-proxy?blob=... (not /blob-proxy/?blob=...)
               pdfUrl = pdfUrl.replace(/^\/blob-proxy\/\?/, '/blob-proxy?');
             }
@@ -133,7 +133,7 @@ function ConversationalAgent() {
             // If parsing fails, try to extract blob parameter manually
             const blobMatch = pdfUrl.match(/[?&]blob=([^&]+)/);
             if (blobMatch) {
-              pdfUrl = /blob-proxy?blob=${blobMatch[1]};
+              pdfUrl = `/blob-proxy?blob=${blobMatch[1]}`;
               // Ensure URL format is correct: /blob-proxy?blob=... (not /blob-proxy/?blob=...)
               pdfUrl = pdfUrl.replace(/^\/blob-proxy\/\?/, '/blob-proxy?');
             }
@@ -145,7 +145,7 @@ function ConversationalAgent() {
 
         // Ensure the URL starts with / for relative paths
         if (pdfUrl && !pdfUrl.startsWith('/') && !pdfUrl.startsWith('http://') && !pdfUrl.startsWith('https://')) {
-          pdfUrl = /${pdfUrl};
+          pdfUrl = `/${pdfUrl}`;
         }
 
         // Convert proxy URL to full URL if needed
@@ -168,12 +168,12 @@ function ConversationalAgent() {
               const containerName = pathParts[0];
               const blobName = pathParts.slice(1).join('/');
               // Encode as URL-safe base64 for proxy URL (matching backend format)
-              const standardBase64 = btoa(${containerName}/${blobName});
+              const standardBase64 = btoa(`${containerName}/${blobName}`);
               const urlSafeBase64 = standardBase64
                 .replace(/\+/g, '-')
                 .replace(/\//g, '_')
                 .replace(/=/g, '');
-              pdfUrl = getBlobProxyUrl(/blob-proxy?blob=${urlSafeBase64}, true);
+              pdfUrl = getBlobProxyUrl(`/blob-proxy?blob=${urlSafeBase64}`, true);
             }
           } catch (e) {
             console.error('Error converting blob URL to proxy:', e);
@@ -202,11 +202,11 @@ function ConversationalAgent() {
               const urlObj = new URL(pdfUrl);
               const blobParam = urlObj.searchParams.get('blob');
               if (blobParam) {
-                pdfUrl = getBlobProxyUrl(/blob-proxy?blob=${blobParam}, true);
+                pdfUrl = getBlobProxyUrl(`/blob-proxy?blob=${blobParam}`, true);
               } else {
                 const pathMatch = pdfUrl.match(/blob-proxy[\/\?]blob=([^&\/\s]+)/);
                 if (pathMatch) {
-                  pdfUrl = getBlobProxyUrl(/blob-proxy?blob=${pathMatch[1]}, true);
+                  pdfUrl = getBlobProxyUrl(`/blob-proxy?blob=${pathMatch[1]}`, true);
                 } else {
                   return;
                 }
@@ -214,7 +214,7 @@ function ConversationalAgent() {
             } catch (e) {
               const manualMatch = pdfUrl.match(/[?&]blob=([^&\/\s]+)/);
               if (manualMatch) {
-                pdfUrl = getBlobProxyUrl(/blob-proxy?blob=${manualMatch[1]}, true);
+                pdfUrl = getBlobProxyUrl(`/blob-proxy?blob=${manualMatch[1]}`, true);
               } else {
                 return;
               }
@@ -262,7 +262,7 @@ function ConversationalAgent() {
       const sanitizedHistory = newHistory.slice(0, -1).map(({ role, content }) => ({ role, content }));
 
       const headers = getAuthHeaders();
-      const response = await axios.post(${API_BASE_URL}/conversational-chat,
+      const response = await axios.post(`${API_BASE_URL}/conversational-chat`,
         {
           question: currentQuestion,
           history: sanitizedHistory,
@@ -283,7 +283,7 @@ function ConversationalAgent() {
       setError(errorMessage);
       setChatHistory(currentHistory => {
         return currentHistory.map(msg =>
-          msg.id === assistantMessageId ? { ...msg, content: Sorry, an error occurred: ${errorMessage} } : msg
+          msg.id === assistantMessageId ? { ...msg, content: `Sorry, an error occurred: ${errorMessage}` } : msg
         );
       });
     } finally {
@@ -295,13 +295,13 @@ function ConversationalAgent() {
     if (!message || !message.content) return;
 
     const userMessage = chatHistory.findLast(msg => msg.role === 'user');
-    const finalResponseHtml = <h2>Question</h2><p>${userMessage?.content || 'N/A'}</p><hr/><h2>Answer</h2>${message.content};
+    const finalResponseHtml = `<h2>Question</h2><p>${userMessage?.content || 'N/A'}</p><hr/><h2>Answer</h2>${message.content}`;
 
     setIsDownloading(true);
     setError(null);
     try {
       const headers = getAuthHeaders();
-      const response = await axios.post(${API_BASE_URL}/download-report,
+      const response = await axios.post(`${API_BASE_URL}/download-report`,
         { html_content: finalResponseHtml },
         {
           headers,
@@ -311,7 +311,7 @@ function ConversationalAgent() {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', Conversation_Response.docx);
+      link.setAttribute('download', `Conversation_Response.docx`);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
@@ -332,7 +332,7 @@ function ConversationalAgent() {
 
     try {
       const headers = getAuthHeaders();
-      await axios.post(${API_BASE_URL}/feedback, {
+      await axios.post(`${API_BASE_URL}/feedback`, {
         question: userMessage.content,
         answer: assistantMessage.content,
         feedback: feedbackType,
@@ -369,7 +369,7 @@ function ConversationalAgent() {
       .replace(/^[ \t]+$/gm, '');
 
     // Process References section - convert markdown links to PDF viewer links
-    const referencesSectionRegex = /(##?\s*References\s*:?\s*\n|^References\s*:?\s*\n)([\s\S]?)(?=\n##?\s\w+|\n##?\s*References|$)/i;
+    const referencesSectionRegex = /(##?\s*References\s*:?\s*\n|^References\s*:?\s*\n)([\s\S]*?)(?=\n##?\s*\w+|\n##?\s*References|$)/i;
     const referencesMatch = formattedContent.match(referencesSectionRegex);
 
     if (referencesMatch) {
@@ -525,11 +525,11 @@ function ConversationalAgent() {
           try {
             const urlToParse = cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://')
               ? cleanUrl
-              : https://${cleanUrl};
+              : `https://${cleanUrl}`;
             const urlObj = new URL(urlToParse);
             const blobParam = urlObj.searchParams.get('blob');
             if (blobParam) {
-              processedUrl = /blob-proxy?blob=${decodeURIComponent(blobParam)};
+              processedUrl = `/blob-proxy?blob=${decodeURIComponent(blobParam)}`;
             } else {
               currentIndex = linkStart + 1;
               continue;
@@ -537,7 +537,7 @@ function ConversationalAgent() {
           } catch (e) {
             const blobMatch = cleanUrl.match(/[?&]blob=([^&]+)/);
             if (blobMatch) {
-              processedUrl = /blob-proxy?blob=${decodeURIComponent(blobMatch[1])};
+              processedUrl = `/blob-proxy?blob=${decodeURIComponent(blobMatch[1])}`;
             } else {
               currentIndex = linkStart + 1;
               continue;
@@ -552,12 +552,12 @@ function ConversationalAgent() {
             if (pathParts.length >= 2) {
               const containerName = pathParts[0];
               const blobName = pathParts.slice(1).join('/');
-              const standardBase64 = btoa(${containerName}/${blobName});
+              const standardBase64 = btoa(`${containerName}/${blobName}`);
               const urlSafeBase64 = standardBase64
                 .replace(/\+/g, '-')
                 .replace(/\//g, '_')
                 .replace(/=/g, '');
-              processedUrl = /blob-proxy?blob=${urlSafeBase64};
+              processedUrl = `/blob-proxy?blob=${urlSafeBase64}`;
             }
           } catch (e) {
             currentIndex = linkStart + 1;
@@ -571,11 +571,11 @@ function ConversationalAgent() {
             const urlObj = new URL(processedUrl);
             const blobParam = urlObj.searchParams.get('blob');
             if (blobParam) {
-              processedUrl = /blob-proxy?blob=${blobParam};
+              processedUrl = `/blob-proxy?blob=${blobParam}`;
             } else {
               const blobMatch = processedUrl.match(/[?&]blob=([^&\/\s]+)/);
               if (blobMatch) {
-                processedUrl = /blob-proxy?blob=${blobMatch[1]};
+                processedUrl = `/blob-proxy?blob=${blobMatch[1]}`;
               } else {
                 currentIndex = linkStart + 1;
                 continue;
@@ -584,7 +584,7 @@ function ConversationalAgent() {
           } catch (e) {
             const blobMatch = processedUrl.match(/[?&]blob=([^&\/\s]+)/);
             if (blobMatch) {
-              processedUrl = /blob-proxy?blob=${blobMatch[1]};
+              processedUrl = `/blob-proxy?blob=${blobMatch[1]}`;
             } else {
               currentIndex = linkStart + 1;
               continue;
@@ -599,18 +599,18 @@ function ConversationalAgent() {
           const pageNumber = pageMatch ? parseInt(pageMatch[1]) : null;
           const cleanDescription = description.replace(/\s*\(Page\s+\d+\)/i, '').trim();
           const encodedUrl = encodeURIComponent(processedUrl);
-          processedParts.push(<span class="reference-item">[${cleanDescription}] - <span class="pdf-reference-link" data-pdf-url="${encodedUrl}" data-page-number="${pageNumber || ''}" style="color: #007bff; text-decoration: underline; cursor: pointer; font-weight: 500;">Click Here for PDF</span></span>);
+          processedParts.push(`<span class="reference-item">[${cleanDescription}] - <span class="pdf-reference-link" data-pdf-url="${encodedUrl}" data-page-number="${pageNumber || ''}" style="color: #007bff; text-decoration: underline; cursor: pointer; font-weight: 500;">Click Here for PDF</span></span>`);
           currentIndex = endIndex + 1;
         } else if (cleanUrl.includes('example.com')) {
           const blobMatch = cleanUrl.match(/[?&]blob=([^&\)]+)/);
           if (blobMatch) {
-            processedUrl = /blob-proxy?blob=${decodeURIComponent(blobMatch[1])};
+            processedUrl = `/blob-proxy?blob=${decodeURIComponent(blobMatch[1])}`;
             processedUrl = processedUrl.replace(/^\/blob-proxy\/\?/, '/blob-proxy?');
             const pageMatch = description.match(/\(Page\s+(\d+)\)/i);
             const pageNumber = pageMatch ? parseInt(pageMatch[1]) : null;
             const cleanDescription = description.replace(/\s*\(Page\s+\d+\)/i, '').trim();
             const encodedUrl = encodeURIComponent(processedUrl);
-            processedParts.push(<span class="reference-item">[${cleanDescription}] - <span class="pdf-reference-link" data-pdf-url="${encodedUrl}" data-page-number="${pageNumber || ''}" style="color: #007bff; text-decoration: underline; cursor: pointer; font-weight: 500;">Click Here for PDF</span></span>);
+            processedParts.push(`<span class="reference-item">[${cleanDescription}] - <span class="pdf-reference-link" data-pdf-url="${encodedUrl}" data-page-number="${pageNumber || ''}" style="color: #007bff; text-decoration: underline; cursor: pointer; font-weight: 500;">Click Here for PDF</span></span>`);
             currentIndex = endIndex + 1;
           } else {
             currentIndex = linkStart + 1;
@@ -635,7 +635,7 @@ function ConversationalAgent() {
         // Convert #### headers to bullet points for better readability
         if (section.match(/^####\s/)) {
           const content = section.replace(/^####\s/, '').trim();
-          return <div class="bullet-header"><span class="bullet-point">•</span><span class="header-content">${content}</span></div>;
+          return `<div class="bullet-header"><span class="bullet-point">•</span><span class="header-content">${content}</span></div>`;
         }
         return section
           .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -652,7 +652,7 @@ function ConversationalAgent() {
             .replace(/\n/g, '');
 
           // Remove inline background and color styles from th elements to let CSS handle it
-          cleaned = cleaned.replace(/<th([^>])style="([^"])"([^>]*)>/gi, (match, before, styleAttr, after) => {
+          cleaned = cleaned.replace(/<th([^>]*)style="([^"]*)"([^>]*)>/gi, (match, before, styleAttr, after) => {
             // Remove background and color related styles
             const cleanedStyle = styleAttr
               .replace(/background-color[^;]*;?/gi, '')
@@ -663,9 +663,9 @@ function ConversationalAgent() {
 
             // If style is empty or only whitespace, remove the style attribute entirely
             if (!cleanedStyle || cleanedStyle.trim() === '') {
-              return <th${before}${after}>;
+              return `<th${before}${after}>`;
             }
-            return <th${before}style="${cleanedStyle}"${after}>;
+            return `<th${before}style="${cleanedStyle}"${after}>`;
           });
 
           return cleaned;
@@ -691,14 +691,14 @@ function ConversationalAgent() {
                 // First line is header
                 htmlTable += '<thead><tr>';
                 cells.forEach(cell => {
-                  htmlTable += <th>${cell}</th>;
+                  htmlTable += `<th>${cell}</th>`;
                 });
                 htmlTable += '</tr></thead><tbody>';
               } else {
                 // Data rows
                 htmlTable += '<tr>';
                 cells.forEach(cell => {
-                  htmlTable += <td>${cell}</td>;
+                  htmlTable += `<td>${cell}</td>`;
                 });
                 htmlTable += '</tr>';
               }
@@ -717,15 +717,15 @@ function ConversationalAgent() {
         const listItems = section.split('\n').map(line => {
           if (line.match(/^[\-\*\+]\s/)) {
             const content = line.replace(/^[\-\*\+]\s/, '').trim();
-            return <li><span class="bullet-point">•</span><span class="list-content">${content}</span></li>;
+            return `<li><span class="bullet-point">•</span><span class="list-content">${content}</span></li>`;
           } else if (line.match(/^\d+\.\s/)) {
             const content = line.replace(/^\d+\.\s/, '').trim();
-            return <li><span class="number-point">${line.match(/^\d+/)[0]}.</span><span class="list-content">${content}</span></li>;
+            return `<li><span class="number-point">${line.match(/^\d+/)[0]}.</span><span class="list-content">${content}</span></li>`;
           }
           return line;
         }).filter(item => item.trim());
 
-        return <ul class="enhanced-list">${listItems.join('')}</ul>;
+        return `<ul class="enhanced-list">${listItems.join('')}</ul>`;
       }
 
       // Handle numbered calculation steps (1. 2025 to 2026:)
@@ -755,7 +755,7 @@ function ConversationalAgent() {
       }
 
       // Handle regular paragraphs
-      return <p>${section.trim()}</p>;
+      return `<p>${section.trim()}</p>`;
     });
 
     // Join sections and clean up
@@ -765,8 +765,8 @@ function ConversationalAgent() {
       // Convert remaining line breaks within paragraphs to <br>
       .replace(/\n/g, '<br>')
       // Convert bold and italic text
-      .replace(/\\(.?)\\*/g, '<strong>$1</strong>')
-      .replace(/\(.?)\*/g, '<em>$1</em>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
       // Clean up empty paragraphs
       .replace(/<p><\/p>/g, '')
       .replace(/<p>\s*<\/p>/g, '')
@@ -795,7 +795,7 @@ function ConversationalAgent() {
           return text.trim();
         }
         const safeUrl = encodeURI(decodeURI(url.trim()));
-        return <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">${text.trim()}</a>;
+        return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: underline;">${text.trim()}</a>`;
       }
     );
 
@@ -803,7 +803,7 @@ function ConversationalAgent() {
   };
 
   const getDynamicStyles = (theme) => `
-    :root { ${Object.entries(theme).map(([key, value]) => ${key}: ${value};).join('\n')} }
+    :root { ${Object.entries(theme).map(([key, value]) => `${key}: ${value};`).join('\n')} }
     body { font-family: 'Inter', sans-serif; background-color: var(--background-primary); margin: 0; }
     button {
         background-color: var(--accent-color);
@@ -1272,7 +1272,7 @@ function ConversationalAgent() {
         <div style={{ flex: 1, padding: '1.5rem', backgroundColor: 'var(--background-primary)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: 'var(--text-primary)' }}>Operational Copilot</h2>
 
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: 'var(--background-secondary)', border: 1px solid var(--border-color), borderRadius: '0.5rem', padding: '1.5rem' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: 'var(--background-secondary)', border: `1px solid var(--border-color)`, borderRadius: '0.5rem', padding: '1.5rem' }}>
             <div style={{ flex: 1, overflowY: 'auto', paddingRight: '1rem' }}>
               {chatHistory.length === 0 && !isLoading ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center' }}>
@@ -1328,28 +1328,28 @@ function ConversationalAgent() {
                               // Build detailed citation text
                               const citationParts = [];
                               if (pageNumber) {
-                                citationParts.push(Page ${pageNumber});
+                                citationParts.push(`Page ${pageNumber}`);
                               }
                               if (sectionRefs.length > 0) {
-                                const sectionText = sectionRefs.slice(0, 3).map(s => Section ${s}).join(', ');
+                                const sectionText = sectionRefs.slice(0, 3).map(s => `Section ${s}`).join(', ');
                                 const moreSections = sectionRefs.length > 3 ? ` and ${sectionRefs.length - 3} more` : '';
-                                citationParts.push(Sections: ${sectionText}${moreSections});
+                                citationParts.push(`Sections: ${sectionText}${moreSections}`);
                               }
                               if (tableRefs.length > 0) {
-                                const tableText = tableRefs.slice(0, 3).map(t => Table ${t}).join(', ');
+                                const tableText = tableRefs.slice(0, 3).map(t => `Table ${t}`).join(', ');
                                 const moreTables = tableRefs.length > 3 ? ` and ${tableRefs.length - 3} more` : '';
-                                citationParts.push(Tables: ${tableText}${moreTables});
+                                citationParts.push(`Tables: ${tableText}${moreTables}`);
                               }
                               if (figureRefs.length > 0) {
-                                const figureText = figureRefs.slice(0, 3).map(f => Figure ${f}).join(', ');
+                                const figureText = figureRefs.slice(0, 3).map(f => `Figure ${f}`).join(', ');
                                 const moreFigures = figureRefs.length > 3 ? ` and ${figureRefs.length - 3} more` : '';
-                                citationParts.push(Figures: ${figureText}${moreFigures});
+                                citationParts.push(`Figures: ${figureText}${moreFigures}`);
                               }
 
                               // Create enhanced display text - only add citation parts if filename_or_title doesn't already contain them
                               const hasExistingCitation = source.filename_or_title && source.filename_or_title.includes('(Page');
                               const enhancedTitle = citationParts.length > 0 && !hasExistingCitation
-                                ? ${source.filename_or_title} (${citationParts.join(', ')})
+                                ? `${source.filename_or_title} (${citationParts.join(', ')})`
                                 : source.filename_or_title;
 
                               // Get content for description/summary
@@ -1383,7 +1383,7 @@ function ConversationalAgent() {
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           style={{ color: '#007bff', textDecoration: 'none', fontWeight: '500' }}
-                                          title={Open document: ${source.filename_or_title}}
+                                          title={`Open document: ${source.filename_or_title}`}
                                         >
                                           📄 {enhancedTitle}
                                         </a>
@@ -1435,7 +1435,7 @@ function ConversationalAgent() {
                         }}
                       />
                       {msg.role === 'assistant' && !isLoading && msg.content && msg.content !== 'Thinking...' && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', paddingTop: '1rem', borderTop: 1px solid var(--border-color) }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem', paddingTop: '1rem', borderTop: `1px solid var(--border-color)` }}>
                           <button onClick={() => handleDownload(msg)} disabled={isDownloading} style={{ fontSize: '0.8rem', padding: '0.25rem 0.75rem', height: 'auto' }}>
                             {isDownloading ? '...' : 'Download'}
                           </button>
@@ -1452,7 +1452,7 @@ function ConversationalAgent() {
               <div ref={chatEndRef} />
             </div>
 
-            <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: 1px solid var(--border-color) }}>
+            <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: `1px solid var(--border-color)` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <textarea
                   value={userInput}
