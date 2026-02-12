@@ -170,12 +170,12 @@ function MDAReviewer() {
 
   const analysisPromptsConfig = {
     "Daily Traffic Snapshot": ["Daily Traffic Snapshot"],
-    "Peak Congestion Analysis": ["Peak congestion analysis"],
-    "Security Lane Efficiency": ["Security lane efficiency"],
-    "Baggage Asset Utilization": ["Baggage asset utilization"],
+    "Peak Congestion Analysis": ["Peak Congestion Analysis"],
+    "Security Lane Efficiency": ["Security Lane Efficiency"],
+    "Baggage Asset Utilization": ["Baggage Asset Utilization"],
     "Boarding Operations Scan": ["Boarding Operations Scan"],
     "Digital Adoption Trends": ["Digital Adoption Trends"],
-    "Customer Sentiment Pulse": ["Customer sentiment pulse"],
+    "Customer Sentiment Pulse": ["Customer Sentiment Pulse"],
     "Operational Headwinds": ["Operational Headwinds"],
     "Terminal Performance Comparison": ["Terminal Performance Comparison"],
     "Turnaround & Resource Planning": ["Turnaround & Resource Planning"]
