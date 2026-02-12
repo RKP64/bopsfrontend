@@ -147,8 +147,8 @@ function MDAReviewer() {
   const { getAuthHeaders, isAuthenticated } = useAuth();
   const [theme, setTheme] = useState(themes.bial_style);
   const [file, setFile] = useState(null);
-  const [analysisCategory, setAnalysisCategory] = useState('EV Market Status');
-  const [specificAnalysis, setSpecificAnalysis] = useState('EV Market status');
+  const [analysisCategory, setAnalysisCategory] = useState('Daily Traffic Snapshot');
+  const [specificAnalysis, setSpecificAnalysis] = useState('Daily Traffic Snapshot');
   const [model, setModel] = useState('gpt-4o-mini');
   const [wordCount, setWordCount] = useState(2000);
   const [useCustomPrompt, setUseCustomPrompt] = useState(false);
@@ -168,30 +168,18 @@ function MDAReviewer() {
   const API_BASE_URL = API_CONFIG.BASE_URL;
   const [pdfViewer, setPdfViewer] = useState({ isOpen: false, url: null, pageNumber: null });
 
-  // const analysisPromptsConfig = {
-  //   "Compare Revenue for Ather and Ola": ["Compare revenue between Ather and Ola"],
-  //   "Compare Costs for Ather and Ola": ["Compare costs between Ather and Ola (single cost)"],
-  //   "Compare EBITDA Margin between Ather and Ola": ["Compare EBITDA margin between Ather and Ola"],
-  //   "Compare CapEx between Ather and Ola": ["Compare capex between Ather and Ola"],
-  //   "Growth plans of Ather or Ola": ["Comment on growth plans of Ather or Ola"],
-  //   "Market Analysis for EV industry": ["Market analysis for EV industry"],
-  //   "EV Market analysis": ["EV market analysis"],
-  //   "Telecom Market Analysis": ["Telecom Market Analysis"],
-  //   "Broadcasting Market Analysis": ["Broadcasting Market Analysis"]
-  // };
-
-const analysisPromptsConfig = {
+  const analysisPromptsConfig = {
     "Daily Traffic Snapshot": ["Daily Traffic Snapshot"],
-    "Peak Congestion Analysis": ["Peak Congestion Analysis"],
-    "Security Lane Efficiency": ["Security Lane Efficiency"],
-    "Baggage Asset Utilization": ["Baggage Asset Utilization"],
+    "Peak Congestion Analysis": ["Peak congestion analysis"],
+    "Security Lane Efficiency": ["Security lane efficiency"],
+    "Baggage Asset Utilization": ["Baggage asset utilization"],
     "Boarding Operations Scan": ["Boarding Operations Scan"],
     "Digital Adoption Trends": ["Digital Adoption Trends"],
-    "Customer Sentiment Pulse": ["Customer Sentiment Pulse"],
+    "Customer Sentiment Pulse": ["Customer sentiment pulse"],
     "Operational Headwinds": ["Operational Headwinds"],
     "Terminal Performance Comparison": ["Terminal Performance Comparison"],
     "Turnaround & Resource Planning": ["Turnaround & Resource Planning"]
-  }
+  };
 
 
   useEffect(() => {
